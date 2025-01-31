@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import axios from 'axios'
 
 import { TaskItem } from './components'
+import './App.scss'
 
 function App() {
 	const mounted = useRef(false)
