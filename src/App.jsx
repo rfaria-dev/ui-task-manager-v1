@@ -1,4 +1,4 @@
-import { Tasks } from "./components/Tasks";
+import { Tasks } from "./components/Tasks/Tasks";
 import "./App.scss";
 
 function App() {

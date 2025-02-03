@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 import "./Tasks.scss";
-import { TaskItem } from "./TaskItem";
+import { TaskItem } from "../TaskItem/TaskItem";
 
 const Tasks = () => {
   const [task, setTask] = useState([]);
