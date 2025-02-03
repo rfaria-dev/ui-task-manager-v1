@@ -1,1 +1,2 @@
-export * from './TaskItem'
+export * from "./TaskItem";
+export * from "./Tasks";
