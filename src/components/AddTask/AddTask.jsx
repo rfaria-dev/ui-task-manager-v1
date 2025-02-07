@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { CustomInput } from '../CustomInput/CustomInput';
 import { FaPlus } from 'react-icons/fa';
-// import { axios } from 'axios';
+import axios from 'axios';
 import './AddTask.scss';
 import { CustomButton } from '../CustomButton';
 import { ToastContainer, Bounce, toast } from 'react-toastify';
@@ -44,9 +44,16 @@ const AddTask = () => {
         try {
             if (task.length === 0) {
                 return notifyAnError();
-            } else {
-                return notifyOnSuccess();
             }
+
+            await axios.post(
+                'https://task-manager-api-cvfg.onrender.com/tasks',
+                {
+                    description: task,
+                    isCompleted: false,
+                }
+            );
+            return notifyOnSuccess();
         } catch (error) {
             console.error(error);
         }
