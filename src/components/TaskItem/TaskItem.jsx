@@ -1,6 +1,6 @@
 import { AiFillDelete } from 'react-icons/ai';
 import axios from 'axios';
-import { ToastContainer, Bounce, toast } from 'react-toastify';
+import { Bounce, toast } from 'react-toastify';
 
 import './TaskItem.scss';
 
@@ -32,8 +32,7 @@ const TaskItem = ({ task, fetchTasks }) => {
     const handleTaskDeletion = async () => {
         try {
             axios.delete(
-                `https://task-manager-api-cvfg.onrender.com/tasks/${task._id}`,
-                {}
+                `https://task-manager-api-cvfg.onrender.com/tasks/${task._id}`
             );
             await fetchTasks();
 
@@ -72,7 +71,7 @@ const TaskItem = ({ task, fetchTasks }) => {
                     color='#F97474'
                     onClick={handleTaskDeletion}
                 />
-                <ToastContainer />
+                {/* <ToastContainer /> */}
             </div>
         </div>
     );

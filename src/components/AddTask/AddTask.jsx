@@ -4,7 +4,7 @@ import { FaPlus } from 'react-icons/fa';
 import axios from 'axios';
 import './AddTask.scss';
 import { CustomButton } from '../CustomButton';
-import { ToastContainer, Bounce, toast } from 'react-toastify';
+import { Bounce, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const AddTask = ({ fetchTasks }) => {
@@ -76,7 +76,6 @@ const AddTask = ({ fetchTasks }) => {
             >
                 <FaPlus size={14} color='#fff' />
             </CustomButton>
-            <ToastContainer />
         </div>
     );
 };
