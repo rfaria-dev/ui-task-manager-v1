@@ -1,8 +1,46 @@
+import { AiFillDelete } from 'react-icons/ai';
+import axios from 'axios';
+import { ToastContainer, Bounce, toast } from 'react-toastify';
+
 import './TaskItem.scss';
 
-import { AiFillDelete } from 'react-icons/ai';
+const toastCommonProps = {
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: false,
+    pauseOnHover: false,
+    draggable: false,
+    progress: undefined,
+    theme: 'dark',
+    transition: Bounce,
+};
+
+const notifyAnError = () =>
+    toast.error('Err: New Err in the task list', {
+        position: 'bottom-center',
+        ...toastCommonProps,
+    });
+
+const notifyOnSuccess = () =>
+    toast.success('Sucess: Task deleted', {
+        position: 'bottom-center',
+        ...toastCommonProps,
+    });
 
 const TaskItem = ({ task }) => {
+    const handleTaskDeletion = async () => {
+        try {
+            axios.delete(
+                `https://task-manager-api-cvfg.onrender.com/tasks/${task._id}`,
+                {}
+            );
+            notifyOnSuccess();
+        } catch (error) {
+            notifyAnError();
+            console.log(error);
+        }
+    };
+
     return (
         <div className='task-item-container'>
             <div className='task-description'>
@@ -26,7 +64,12 @@ const TaskItem = ({ task }) => {
             </div>
 
             <div className='delete'>
-                <AiFillDelete size={18} color='#F97474' />
+                <AiFillDelete
+                    size={18}
+                    color='#F97474'
+                    onClick={handleTaskDeletion}
+                />
+                <ToastContainer />
             </div>
         </div>
     );
