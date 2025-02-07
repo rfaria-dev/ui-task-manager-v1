@@ -4,36 +4,39 @@ import { ToastContainer, Bounce, toast } from 'react-toastify';
 
 import './TaskItem.scss';
 
-const toastCommonProps = {
-    autoClose: 2000,
-    hideProgressBar: false,
-    closeOnClick: false,
-    pauseOnHover: false,
-    draggable: false,
-    progress: undefined,
-    theme: 'dark',
-    transition: Bounce,
-};
+const TaskItem = ({ task, fetchTasks }) => {
+    const toastCommonProps = {
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: 'dark',
+        transition: Bounce,
+    };
 
-const notifyAnError = () =>
-    toast.error('Err: New Err in the task list', {
-        position: 'bottom-center',
-        ...toastCommonProps,
-    });
+    const notifyAnError = () =>
+        toast.error('Err: New Err in the task list', {
+            position: 'bottom-center',
+            toastId: 'fgrd',
+            ...toastCommonProps,
+        });
 
-const notifyOnSuccess = () =>
-    toast.success('Sucess: Task deleted', {
-        position: 'bottom-center',
-        ...toastCommonProps,
-    });
+    const notifyOnSuccess = () =>
+        toast.success('Sucess: Task deleted', {
+            position: 'bottom-center',
+            ...toastCommonProps,
+        });
 
-const TaskItem = ({ task }) => {
     const handleTaskDeletion = async () => {
         try {
             axios.delete(
                 `https://task-manager-api-cvfg.onrender.com/tasks/${task._id}`,
                 {}
             );
+            await fetchTasks();
+
             notifyOnSuccess();
         } catch (error) {
             notifyAnError();
