@@ -7,7 +7,7 @@ import { CustomButton } from '../CustomButton';
 import { ToastContainer, Bounce, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const AddTask = () => {
+const AddTask = ({ fetchTasks }) => {
     const [task, setTask] = useState('');
 
     const onChange = (e) => {
@@ -53,9 +53,12 @@ const AddTask = () => {
                     isCompleted: false,
                 }
             );
+            await fetchTasks();
+            setTask('');
             return notifyOnSuccess();
         } catch (error) {
             console.error(error);
+            notifyAnError();
         }
     };
 
@@ -66,7 +69,11 @@ const AddTask = () => {
                 value={task}
                 onChange={onChange}
             />
-            <CustomButton onClick={handleTaskAddition}>
+            <CustomButton
+                onClick={() => {
+                    handleTaskAddition();
+                }}
+            >
                 <FaPlus size={14} color='#fff' />
             </CustomButton>
             <ToastContainer />
