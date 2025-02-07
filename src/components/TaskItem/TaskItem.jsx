@@ -31,7 +31,7 @@ const TaskItem = ({ task, fetchTasks }) => {
 
     const handleTaskDeletion = async () => {
         try {
-            axios.delete(
+            await axios.delete(
                 `https://task-manager-api-cvfg.onrender.com/tasks/${task._id}`
             );
             await fetchTasks();
