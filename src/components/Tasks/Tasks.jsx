@@ -1,57 +1,60 @@
-import { useState, useEffect } from 'react'
-import axios from 'axios'
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
-import './Tasks.scss'
-import { AddTask } from '../AddTask/AddTask'
-import { TaskItem } from '../TaskItem/TaskItem'
+import './Tasks.scss';
+import { AddTask } from '../AddTask/AddTask';
+import { TaskItem } from '../TaskItem/TaskItem';
 
 const Tasks = () => {
-	const [tasks, setTasks] = useState([])
+    const [tasks, setTasks] = useState([]);
 
-	const fetchTasks = async () => {
-		try {
-			const { data } = await axios.get(
-				'https://task-manager-api-cvfg.onrender.com/tasks'
-			)
+    const fetchTasks = async () => {
+        try {
+            const { data } = await axios.get(
+                'https://task-manager-api-cvfg.onrender.com/tasks'
+            );
 
-			setTasks(data)
-		} catch (error) {
-			console.log(error)
-		}
-	}
+            setTasks(data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
-	useEffect(() => {
-		fetchTasks()
-	}, [])
+    useEffect(() => {
+        fetchTasks();
+    }, []);
 
-	return (
-		<div className="tasks-container">
-			<h2>My Tasks</h2>
+    return (
+        <div className='tasks-container'>
+            <h2>My Tasks</h2>
 
-			<div className="last-tasks">
-				<h3>Last Tasks</h3>
-				<AddTask />
-				<div className="tasks-list">
-					{tasks
-						.filter((task) => task.isCompleted === false)
-						.map((lastTask) => (
-							<TaskItem key={lastTask.id} task={lastTask} />
-						))}
-				</div>
-			</div>
+            <div className='last-tasks'>
+                <h3>Last Tasks</h3>
+                <AddTask />
+                <div className='tasks-list'>
+                    {tasks
+                        .filter((task) => task.isCompleted === false)
+                        .map((lastTask) => (
+                            <TaskItem key={lastTask.id} task={lastTask} />
+                        ))}
+                </div>
+            </div>
 
-			<div className="completed-tasks">
-				<h3>Completed Tasks</h3>
-				<div className="tasks-list">
-					{tasks
-						.filter((task) => task.isCompleted)
-						.map((completedTask) => (
-							<TaskItem key={completedTask.id} task={completedTask} />
-						))}
-				</div>
-			</div>
-		</div>
-	)
-}
+            <div className='completed-tasks'>
+                <h3>Completed Tasks</h3>
+                <div className='tasks-list'>
+                    {tasks
+                        .filter((task) => task.isCompleted)
+                        .map((completedTask) => (
+                            <TaskItem
+                                key={completedTask.id}
+                                task={completedTask}
+                            />
+                        ))}
+                </div>
+            </div>
+        </div>
+    );
+};
 
-export { Tasks }
+export { Tasks };
