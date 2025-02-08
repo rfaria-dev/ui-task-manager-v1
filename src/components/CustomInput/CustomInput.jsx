@@ -1,9 +1,18 @@
 import './CustomInput.scss';
 
-const CustomInput = ({ label, value, onChange, onEnterPress }) => {
+const CustomInput = ({
+	label,
+	value,
+	onChange,
+	onEnterPress,
+	autoFocus = false,
+}) => {
 	const handleKeyDown = (e) => {
-		e.key === 'Enter' ? onEnterPress() : null;
+		if (e.key === 'Enter') {
+			onEnterPress();
+		}
 	};
+
 	return (
 		<div className="custom-input-container">
 			<input
@@ -12,15 +21,16 @@ const CustomInput = ({ label, value, onChange, onEnterPress }) => {
 				onChange={(e) => onChange(e)}
 				value={value}
 				onKeyDown={(e) => handleKeyDown(e)}
+				autoFocus={autoFocus}
 			/>
 
-			{label ? (
+			{label && (
 				<label
 					className={`${value.length > 0 ? 'shrink' : ''} custom-input-label`}
 				>
 					{label}
 				</label>
-			) : null}
+			)}
 		</div>
 	);
 };
