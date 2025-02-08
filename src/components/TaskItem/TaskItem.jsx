@@ -15,27 +15,34 @@ const TaskItem = ({ task, fetchTasks }) => {
 		progress: undefined,
 		theme: 'dark',
 		transition: Bounce,
+		position: 'bottom-center',
 	};
 
 	const notifyAnError = () =>
 		toast.error('Err: New Err in the task list', {
-			position: 'bottom-center',
 			toastId: 'fgrd',
 			...toastCommonProps,
 		});
 
-	const notifyOnSuccess = () =>
-		toast.success('Sucess: Task deleted', {
-			position: 'bottom-center',
-			...toastCommonProps,
-		});
+	// const notifyOnSuccess = () =>
+	// 	toast.success('Sucess: Task deleted', {
+	// 		...toastCommonProps,
+	// 	});
 
 	const handleTaskDeletion = async () => {
 		try {
-			await axios.delete(`${API_URL}${task._id}`);
-			await fetchTasks();
-
-			notifyOnSuccess();
+			await toast.promise(
+				(async () => {
+					await axios.delete(`${API_URL}${task._id}`);
+					await fetchTasks(); // Executado após a exclusão
+				})(),
+				{
+					pending: 'Removendo a tarefa...',
+					success: 'Tarefa removida com sucesso!',
+					error: 'Erro ao remover a tarefa!',
+				},
+				{ ...toastCommonProps }
+			);
 		} catch (error) {
 			notifyAnError();
 			console.log(error);
@@ -44,11 +51,20 @@ const TaskItem = ({ task, fetchTasks }) => {
 
 	const handleTaskCompletionChange = async (e) => {
 		try {
-			await axios.patch(`${API_URL}${task._id}`, {
-				isCompleted: e.target.checked,
-			});
-			fetchTasks();
-			notifyOnSuccess();
+			await toast.promise(
+				async () => {
+					await axios.patch(`${API_URL}${task._id}`, {
+						isCompleted: e.target.checked,
+					});
+					await fetchTasks();
+				},
+				{
+					pending: 'Atualizando tarefa...',
+					success: 'Tarefa atualizada com sucesso!',
+					error: 'Erro ao adicionar a tarefa!',
+				},
+				{ ...toastCommonProps }
+			);
 		} catch (error) {
 			notifyAnError();
 			console.log(error);

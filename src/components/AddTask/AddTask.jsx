@@ -12,31 +12,21 @@ const AddTask = ({ fetchTasks }) => {
 	const onChange = (e) => {
 		setTask(e.target.value);
 	};
+	const commonToastProps = {
+		position: 'bottom-center',
+		autoClose: 2000,
+		hideProgressBar: false,
+		closeOnClick: false,
+		pauseOnHover: false,
+		draggable: false,
+		progress: undefined,
+		theme: 'dark',
+		transition: Bounce,
+	};
 
 	const notifyAnError = () =>
 		toast.error('Error: The task needs a description to be added.', {
-			position: 'bottom-center',
-			autoClose: 2000,
-			hideProgressBar: false,
-			closeOnClick: false,
-			pauseOnHover: false,
-			draggable: false,
-			progress: undefined,
-			theme: 'dark',
-			transition: Bounce,
-		});
-
-	const notifyOnSuccess = () =>
-		toast.success('Sucess', {
-			position: 'bottom-center',
-			autoClose: 2000,
-			hideProgressBar: false,
-			closeOnClick: false,
-			pauseOnHover: false,
-			draggable: false,
-			progress: undefined,
-			theme: 'dark',
-			transition: Bounce,
+			...commonToastProps,
 		});
 
 	const handleTaskAddition = async () => {
@@ -45,16 +35,28 @@ const AddTask = ({ fetchTasks }) => {
 				return notifyAnError();
 			}
 
-			await axios.post(
-				'https://task-manager-api-cvfg.onrender.com/tasks',
+			await toast.promise(
+				async () => {
+					await axios.post(
+						'https://task-manager-api-cvfg.onrender.com/tasks',
+						{
+							description: task,
+							isCompleted: false,
+						}
+					);
+					await fetchTasks();
+				},
 				{
-					description: task,
-					isCompleted: false,
+					pending: 'Adicionando tarefa...',
+					success: 'Tarefa adicionada com sucesso!',
+					error: 'Erro ao adicionar a tarefa!',
+				},
+				{
+					...commonToastProps,
 				}
 			);
-			await fetchTasks();
+
 			setTask('');
-			return notifyOnSuccess();
 		} catch (error) {
 			console.error(error);
 			notifyAnError();
