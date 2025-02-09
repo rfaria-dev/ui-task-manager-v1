@@ -6,7 +6,7 @@ const Login = () => {
 	return (
 		<div className="login-container">
 			<img src={logo} alt="Full Stack Club" />
-			<CustomButton>Signin</CustomButton>
+			<CustomButton>Sign in</CustomButton>
 		</div>
 	);
 };
