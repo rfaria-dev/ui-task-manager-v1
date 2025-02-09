@@ -40,8 +40,15 @@ const Tasks = () => {
 		return tasks.filter((task) => task.isCompleted == true);
 	}, [tasks]);
 
+	//!TODO: Change this polling to websockets
 	useEffect(() => {
-		fetchTasks();
+		fetchTasks(); // busca inicial
+
+		const intervalId = setInterval(() => {
+			fetchTasks(); // busca a cada 5 segundos
+		}, 5000);
+
+		return () => clearInterval(intervalId); // limpa o intervalo ao desmontar o componente
 	}, [fetchTasks]);
 
 	return (
