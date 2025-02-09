@@ -24,11 +24,6 @@ const TaskItem = ({ task, fetchTasks }) => {
 			...toastCommonProps,
 		});
 
-	// const notifyOnSuccess = () =>
-	// 	toast.success('Sucess: Task deleted', {
-	// 		...toastCommonProps,
-	// 	});
-
 	const handleTaskDeletion = async () => {
 		try {
 			await toast.promise(
@@ -43,9 +38,8 @@ const TaskItem = ({ task, fetchTasks }) => {
 				},
 				{ ...toastCommonProps }
 			);
-		} catch (error) {
+		} catch {
 			notifyAnError();
-			console.log(error);
 		}
 	};
 
@@ -65,9 +59,8 @@ const TaskItem = ({ task, fetchTasks }) => {
 				},
 				{ ...toastCommonProps }
 			);
-		} catch (error) {
+		} catch {
 			notifyAnError();
-			console.log(error);
 		}
 	};
 

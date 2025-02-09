@@ -57,8 +57,7 @@ const AddTask = ({ fetchTasks }) => {
 			);
 
 			setTask('');
-		} catch (error) {
-			console.error(error);
+		} catch {
 			notifyAnError();
 		}
 	};

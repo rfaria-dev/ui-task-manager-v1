@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Bounce, toast } from 'react-toastify';
 
 import './Tasks.scss';
 import { AddTask } from '../AddTask/AddTask';
@@ -8,6 +9,18 @@ import { TaskItem } from '../TaskItem/TaskItem';
 const Tasks = () => {
 	const [tasks, setTasks] = useState([]);
 
+	const toastCommonProps = {
+		autoClose: 2000,
+		hideProgressBar: false,
+		closeOnClick: false,
+		pauseOnHover: false,
+		draggable: false,
+		progress: undefined,
+		theme: 'dark',
+		transition: Bounce,
+		position: 'bottom-center',
+	};
+
 	const fetchTasks = async () => {
 		try {
 			const { data } = await axios.get(
@@ -15,8 +28,8 @@ const Tasks = () => {
 			);
 
 			setTasks(data);
-		} catch (error) {
-			console.log(error);
+		} catch {
+			toast.error('Error fetching tasks :(', { ...toastCommonProps });
 		}
 	};
 
